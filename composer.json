@@ -1,0 +1,27 @@
+{
+    "name": "ihor/frame",
+    "description": "ihor/frame",
+    "type": "shopware-platform-plugin",
+    "version": "1.0.0",
+    "license": "MIT",
+    "require": {
+        "shopware/core": "~6.6.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "Ihor\\Frame\\IhorFrame",
+        "label": {
+            "de-DE": "Framework plugin",
+            "en-GB": "Framework plugin"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Ihor\\Frame\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ihor\\Tests\\": "tests/"
+        }
+    }
+}
