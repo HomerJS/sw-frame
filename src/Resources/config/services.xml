@@ -7,14 +7,14 @@
     <services>
         <!--        CLI Command-->
         <service id="Ihor\Frame\Command\TestCommand">
-            <argument type="service" id="test_entity.repository" />
+            <argument type="service" id="simpsons.repository" />
             <tag name="console.command" />
         </service>
 
 
 <!--        Entity -->
-        <service id="Ihor\Frame\Entity\TestEntity">
-            <tag name="shopware.entity"/>
+        <service id="Ihor\Frame\Core\Content\Simpsons\SimpsonsDefinition" >
+            <tag name="shopware.entity.definition"/>
         </service>
     </services>
 </container>
