@@ -8,6 +8,7 @@
         <!--        CLI Command-->
         <service id="Ihor\Frame\Command\TestCommand">
             <argument type="service" id="simpsons.repository" />
+            <argument type="service" id="simple.repository" />
             <tag name="console.command" />
         </service>
 
@@ -15,6 +16,10 @@
 <!--        Entity -->
         <service id="Ihor\Frame\Core\Content\Simpsons\SimpsonsDefinition" >
             <tag name="shopware.entity.definition"/>
+        </service>
+
+        <service id="Ihor\Frame\Core\Content\Simple\SimpleEntity" >
+            <tag name="shopware.entity"/>
         </service>
     </services>
 </container>
