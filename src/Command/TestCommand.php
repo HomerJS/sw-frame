@@ -37,8 +37,9 @@ class TestCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $context = Context::createCLIContext();
-
+/////////////////////////////////////////////////////////////////////
 //        READ
+///////////////////////////////////////////////////////////////////////
 //        $all = new Criteria();
 
 //        $byId = new Criteria(['01932f94a4dd70e98e0193d678095152', ...]);
@@ -63,34 +64,41 @@ class TestCommand extends Command
 //        $criteria = new Criteria();
 //        $criteria->addAssociation('product.categories');
 
-        $criteria = new Criteria();
-
-        $res = $this->simple->search($criteria ,$context);
-
-        foreach ($res as $a) {
-            var_dump($a->product->categoryIds);
-
-        }
-
-
+//        $criteria = new Criteria();
+//
+//        $res = $this->simple->search($criteria ,$context);
+//
+//        foreach ($res as $a) {
+//            var_dump($a->product->categoryIds);
+//
+//        }
 
 
 
 
 
+//$this->simple->upsert([
+//    [
+//        'id' => '01933fb806e4713cb6535346c88ecd19',
+//        'customFields' => ['asdasd', '13414']
+//    ]
+//], $context);
 
 
 
-//        $a = $this->simple->create([
-//            [
-//                'id' => Uuid::randomHex(),
+
+        $a = $this->simple->create([
+            [
+                'id' => Uuid::randomHex(),
 //                'int' => 456,
 //                'string' => 'some string2',
 //                'text' => 'etxt etxt etxt etxt',
-//                'json' => ['test'=>1, 'ab'=>2],
-//                'productId' => '018fec75209473f1ac187726bddc9116'
-//            ]
-//        ], $context);
+                'json' => ['test'=>1, 'ab'=>2],
+                'productId' => '018fec75209473f1ac187726bddc9116',
+                'transString' => 'de',
+                'customFields' => ['swag_example_size' => 15, 'ttt' => 'asdasd']
+            ]
+        ], $context);
 //
 //        foreach ($a->getList() as $s) {
 //            var_dump($s);

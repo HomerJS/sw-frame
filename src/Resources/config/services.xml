@@ -21,5 +21,10 @@
         <service id="Ihor\Frame\Core\Content\Simple\SimpleEntity" >
             <tag name="shopware.entity"/>
         </service>
+
+<!--    Translation    -->
+        <service id="Ihor\Frame\Core\Content\Simple\Aggregate\SimpleTranslation\SimpleTranslationEntity" >
+            <tag name="shopware.entity"/>
+        </service>
     </services>
 </container>
