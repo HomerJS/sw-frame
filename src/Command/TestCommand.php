@@ -2,6 +2,7 @@
 
 namespace Ihor\Frame\Command;
 
+use Shopware\Core\Defaults;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 
@@ -11,6 +12,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
 use Shopware\Core\Framework\Uuid\Uuid;
+use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -23,20 +25,56 @@ class TestCommand extends Command
 {
     private EntityRepository $simpsons;
     private EntityRepository $simple;
+    private EntityRepository $customFieldSetRepository;
 
     public function __construct(
         EntityRepository $simpsons,
         EntityRepository $simple,
+        EntityRepository $customFieldSetRepository,
         ?string $name = null
     ) {
         parent::__construct($name);
         $this->simpsons = $simpsons;
         $this->simple = $simple;
+        $this->customFieldSetRepository = $customFieldSetRepository;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $context = Context::createCLIContext();
+/////////////////////////////////////////////////////////////////////
+//       SET CUSTOM FIELD TO ADMIN
+///////////////////////////////////////////////////////////////////////
+
+//        $this->customFieldSetRepository->create([
+//            [
+//                'name' => 'simple_set',
+//                'config' => [
+//                    'label' => [
+//                        'en-GB' => 'English custom field set label',
+//                        'de-DE' => 'German custom field set label',
+//                        Defaults::LANGUAGE_SYSTEM => "Mention the fallback label here"
+//                    ]
+//                ],
+//                'customFields' => [
+//                    [
+//                        'name' => 'simple_string',
+//                        'type' => CustomFieldTypes::TEXT,
+//                        'config' => [
+//                            'label' => [
+//                                'en-GB' => 'English custom field label',
+//                                'de-DE' => 'German custom field label',
+//                                Defaults::LANGUAGE_SYSTEM => "Mention the fallback label here"
+//                            ],
+//                            'customFieldPosition' => 1
+//                        ]
+//                    ]
+//                ]
+//            ]
+//        ], $context);
+/////////////////////////////////////////////////////////////////////
+
+
 /////////////////////////////////////////////////////////////////////
 //        READ
 ///////////////////////////////////////////////////////////////////////
@@ -72,7 +110,7 @@ class TestCommand extends Command
 //            var_dump($a->product->categoryIds);
 //
 //        }
-
+///////////////////////////////////////////////////////////////////////
 
 
 

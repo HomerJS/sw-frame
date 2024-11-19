@@ -21,11 +21,7 @@ use Shopware\Core\Framework\Struct\ArrayEntity;
 #[AttributeEntity('simple')]
 class SimpleEntity extends Entity
 {
-    /**
-     * @var array<string, mixed>|null
-     */
-    #[CustomFields]
-    public ?array $customFields = null;
+    use EntityCustomFieldsTrait;
 
     #[PrimaryKey]
     #[Field(type: FieldType::UUID)]
@@ -37,7 +33,8 @@ class SimpleEntity extends Entity
     #[Field(type: FieldType::TEXT)]
     public ?string $text = null;
 
-
+//    #[Field(type: FieldType::INT)]
+//    public int $int;
 
     #[Field(type: FieldType::JSON)]
     public array $json;
@@ -52,7 +49,11 @@ class SimpleEntity extends Entity
     #[Translations]
     public ?array $translations = null;
 
+    #[ForeignKey(entity: 'product')]
+    public ?string $productId = null;
 
+    #[ManyToOne(entity: 'product', onDelete: onDelete::SET_NULL)]
+    public ?ProductEntity $product = null;
 
     //    API
 
