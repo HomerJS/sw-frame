@@ -27,11 +27,11 @@ class SimpleEntity extends Entity
     #[Field(type: FieldType::UUID)]
     public string $id;
 
-    #[Field(type: FieldType::STRING)]
-    public ?string $string;
-
-    #[Field(type: FieldType::TEXT)]
-    public ?string $text = null;
+//    #[Field(type: FieldType::STRING)]
+//    public ?string $string;
+//
+//    #[Field(type: FieldType::TEXT)]
+//    public ?string $text = null;
 
 //    #[Field(type: FieldType::INT)]
 //    public int $int;

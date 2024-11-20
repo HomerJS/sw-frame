@@ -2,22 +2,14 @@
 
 namespace Ihor\Frame\Command;
 
-use Shopware\Core\Defaults;
+use Ihor\Frame\Services\SimpleEventService;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
-
-use Shopware\Core\Framework\DataAbstractionLayer\Field\JsonField;
-use Shopware\Core\Framework\DataAbstractionLayer\Field\ListField;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
-use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\OrFilter;
-use Shopware\Core\Framework\Uuid\Uuid;
-use Shopware\Core\System\CustomField\CustomFieldTypes;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Serializer\Encoder\DecoderInterface;
 
 
 #[AsCommand(name: 'ihor_frame:test', description: 'Hello PhpStorm')]
@@ -26,17 +18,20 @@ class TestCommand extends Command
     private EntityRepository $simpsons;
     private EntityRepository $simple;
     private EntityRepository $customFieldSetRepository;
+    private SimpleEventService $eventService;
 
     public function __construct(
         EntityRepository $simpsons,
         EntityRepository $simple,
         EntityRepository $customFieldSetRepository,
+        SimpleEventService $eventService,
         ?string $name = null
     ) {
         parent::__construct($name);
         $this->simpsons = $simpsons;
         $this->simple = $simple;
         $this->customFieldSetRepository = $customFieldSetRepository;
+        $this->eventService = $eventService;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -113,7 +108,9 @@ class TestCommand extends Command
 ///////////////////////////////////////////////////////////////////////
 
 
-
+/////////////////////////////////////////////////////////////////////
+//        CREATE/ UPDATE
+///////////////////////////////////////////////////////////////////////
 
 //$this->simple->upsert([
 //    [
@@ -125,24 +122,37 @@ class TestCommand extends Command
 
 
 
-        $a = $this->simple->create([
-            [
-                'id' => Uuid::randomHex(),
-//                'int' => 456,
-//                'string' => 'some string2',
-//                'text' => 'etxt etxt etxt etxt',
-                'json' => ['test'=>1, 'ab'=>2],
-                'productId' => '018fec75209473f1ac187726bddc9116',
-                'transString' => 'de',
-                'customFields' => ['swag_example_size' => 15, 'ttt' => 'asdasd']
-            ]
-        ], $context);
+//        $a = $this->simple->create([
+//            [
+//                'id' => Uuid::randomHex(),
+////                'int' => 456,
+////                'string' => 'some string2',
+////                'text' => 'etxt etxt etxt etxt',
+//                'json' => ['test'=>1, 'ab'=>2],
+//                'productId' => '018fec75209473f1ac187726bddc9116',
+//                'transString' => 'de',
+//                'customFields' => ['swag_example_size' => 15, 'ttt' => 'asdasd']
+//            ]
+//        ], $context);
 //
 //        foreach ($a->getList() as $s) {
 //            var_dump($s);
 //        }
+///////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+//       EVENT
+///////////////////////////////////////////////////////////////////////
 
 
+
+        $entity = $this->simple->search(new Criteria(['019344acee8072f8b7119c8c6adfe7d5']), $context)->first();
+
+//        $context = Context::createDefaultContext();
+        $this->eventService->fireEvent($entity, $context);
+
+
+///////////////////////////////////////////////////////////////////////
 
         return Command::SUCCESS;
     }
