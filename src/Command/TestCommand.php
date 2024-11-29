@@ -2,6 +2,7 @@
 
 namespace Ihor\Frame\Command;
 
+use Ihor\Frame\Services\MessageSender;
 use Ihor\Frame\Services\SimpleEventService;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
@@ -15,23 +16,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'ihor_frame:test', description: 'Hello PhpStorm')]
 class TestCommand extends Command
 {
-    private EntityRepository $simpsons;
-    private EntityRepository $simple;
-    private EntityRepository $customFieldSetRepository;
-    private SimpleEventService $eventService;
-
     public function __construct(
-        EntityRepository $simpsons,
-        EntityRepository $simple,
-        EntityRepository $customFieldSetRepository,
-        SimpleEventService $eventService,
+        private EntityRepository $simpsons,
+        private EntityRepository $simple,
+        private EntityRepository $customFieldSetRepository,
+        private SimpleEventService $eventService,
+        private MessageSender $messageSender,
         ?string $name = null
     ) {
         parent::__construct($name);
-        $this->simpsons = $simpsons;
-        $this->simple = $simple;
-        $this->customFieldSetRepository = $customFieldSetRepository;
-        $this->eventService = $eventService;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -146,10 +139,21 @@ class TestCommand extends Command
 
 
 
-        $entity = $this->simple->search(new Criteria(['019344acee8072f8b7119c8c6adfe7d5']), $context)->first();
+//        $entity = $this->simple->search(new Criteria(['019344acee8072f8b7119c8c6adfe7d5']), $context)->first();
 
 //        $context = Context::createDefaultContext();
-        $this->eventService->fireEvent($entity, $context);
+//        $this->eventService->fireEvent($entity, $context);
+
+
+///////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////
+//       Message
+///////////////////////////////////////////////////////////////////////
+
+
+        $this->messageSender->sendMessage('test message');
 
 
 ///////////////////////////////////////////////////////////////////////
